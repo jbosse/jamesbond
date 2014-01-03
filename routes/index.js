@@ -1,8 +1,12 @@
+"use strict";
 
-/*
- * GET home page.
- */
+module.exports = function(){
+  var express = require('express');
+  var app = express();
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express', playerId: '' });
-};
+  app.get('/', function(req, res){
+    res.render('index', { title: 'Table' });
+  });
+
+  return app;
+}();

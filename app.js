@@ -35,9 +35,7 @@ if ('development' == app.get('env')) {
 app.use(express.cookieParser());
 app.use(express.session({secret: 'JimmyBosse'}));
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.use('/table', require('./routes/table'));
+app.use('/', require('./routes/index'));
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
