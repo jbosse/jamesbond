@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='stylesheets/app.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to the <%= title %></p>
+    <div class="cards">
+        <table style="width: 100%">
+            <tbody>
+            <tr>
+                <td><a id="card_0" class="card" href="javascript:" onclick="selectPlayerCard(0)">back</a></td>
+                <td><a id="card_1" class="card" href="javascript:" onclick="selectPlayerCard(1)">back</a></td>
+                <td><a id="card_2" class="card" href="javascript:" onclick="selectPlayerCard(2)">back</a></td>
+                <td><a id="card_3" class="card" href="javascript:" onclick="selectPlayerCard(3)">back</a></td>
+                <td><a id="card_4" class="card" href="javascript:" onclick="selectPlayerCard(4)">back</a></td>
+                <td><a id="card_5" class="card" href="javascript:" onclick="selectPlayerCard(5)">back</a></td>
+                <td><a id="card_6" class="card" href="javascript:" onclick="selectPlayerCard(6)">back</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/lib/jquery-2.0.3.min.js"></script>
+    <script>
+        var playerId = '<%= playerId %>';
+        var socket = io.connect('http://localhost');
+        socket.emit('sit', playerId, function(result){
+            console.log(result);
+        })
+        socket.on('log',function(data){
+            console.log(data);
+        })
+        socket.on('status',function(data){
+            console.log(data);
+            for(var index = 0, count = data.length; index < count; index++){
+                var card = data[index];
+                $('#card_'+index).text(card.value);
+                $('#card_'+index).attr('class','card');
+                if(card.css!=='down'){
+                    $('#card_'+index).addClass('up');
+                }
+                $('#card_'+index).addClass(card.css);
+            }
+        })
+        window.selectPlayerCard = function(id){
+            socket.emit('appPlayerCardSelected', { playerId: playerId, cardId: id, cardValue: $('#card_'+id).text()});
+        }
+    </script>
+  </body>
+</html>

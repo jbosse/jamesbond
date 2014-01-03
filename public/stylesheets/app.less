@@ -1,0 +1,145 @@
+.card {
+  border: 1px solid #ccc;
+  width: 80px;
+  height: 120px;
+  float: left;
+  background-color: #fff;
+  margin-right: 5px;
+  border-radius: 10px;
+  background-image: url('../images/deck_sprite.png');
+  text-indent: -9000px;
+  &.down {
+    margin-right: 0;
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position-y: -480px;
+  }
+  &.swapping {
+    background-position-y: 0px;
+    margin-top: -30px;
+  }
+  &.up {
+    &.opponent { margin-left: -60px; }
+    &.sa  { background-position-x:     0px; background-position-y: 0px}
+    &.s2  { background-position-x:   -80px; background-position-y: 0px}
+    &.s3  { background-position-x:  -160px; background-position-y: 0px}
+    &.s4  { background-position-x:  -240px; background-position-y: 0px}
+    &.s5  { background-position-x:  -320px; background-position-y: 0px}
+    &.s6  { background-position-x:  -400px; background-position-y: 0px}
+    &.s7  { background-position-x:  -480px; background-position-y: 0px}
+    &.s8  { background-position-x:  -560px; background-position-y: 0px}
+    &.s9  { background-position-x:  -640px; background-position-y: 0px}
+    &.s10 { background-position-x:  -720px; background-position-y: 0px}
+    &.sj  { background-position-x:  -800px; background-position-y: 0px}
+    &.sq  { background-position-x:  -880px; background-position-y: 0px}
+    &.sk  { background-position-x:  -960px; background-position-y: 0px}
+
+    &.ha  { background-position-x:     0px; background-position-y: -120px}
+    &.h2  { background-position-x:   -80px; background-position-y: -120px}
+    &.h3  { background-position-x:  -160px; background-position-y: -120px}
+    &.h4  { background-position-x:  -240px; background-position-y: -120px}
+    &.h5  { background-position-x:  -320px; background-position-y: -120px}
+    &.h6  { background-position-x:  -400px; background-position-y: -120px}
+    &.h7  { background-position-x:  -480px; background-position-y: -120px}
+    &.h8  { background-position-x:  -560px; background-position-y: -120px}
+    &.h9  { background-position-x:  -640px; background-position-y: -120px}
+    &.h10 { background-position-x:  -720px; background-position-y: -120px}
+    &.hj  { background-position-x:  -800px; background-position-y: -120px}
+    &.hq  { background-position-x:  -880px; background-position-y: -120px}
+    &.hk  { background-position-x:  -960px; background-position-y: -120px}
+
+    &.ca  { background-position-x:     0px; background-position-y: -240px}
+    &.c2  { background-position-x:   -80px; background-position-y: -240px}
+    &.c3  { background-position-x:  -160px; background-position-y: -240px}
+    &.c4  { background-position-x:  -240px; background-position-y: -240px}
+    &.c5  { background-position-x:  -320px; background-position-y: -240px}
+    &.c6  { background-position-x:  -400px; background-position-y: -240px}
+    &.c7  { background-position-x:  -480px; background-position-y: -240px}
+    &.c8  { background-position-x:  -560px; background-position-y: -240px}
+    &.c9  { background-position-x:  -640px; background-position-y: -240px}
+    &.c10 { background-position-x:  -720px; background-position-y: -240px}
+    &.cj  { background-position-x:  -800px; background-position-y: -240px}
+    &.cq  { background-position-x:  -880px; background-position-y: -240px}
+    &.ck  { background-position-x:  -960px; background-position-y: -240px}
+
+    &.da  { background-position-x:     0px; background-position-y: -360px}
+    &.d2  { background-position-x:   -80px; background-position-y: -360px}
+    &.d3  { background-position-x:  -160px; background-position-y: -360px}
+    &.d4  { background-position-x:  -240px; background-position-y: -360px}
+    &.d5  { background-position-x:  -320px; background-position-y: -360px}
+    &.d6  { background-position-x:  -400px; background-position-y: -360px}
+    &.d7  { background-position-x:  -480px; background-position-y: -360px}
+    &.d8  { background-position-x:  -560px; background-position-y: -360px}
+    &.d9  { background-position-x:  -640px; background-position-y: -360px}
+    &.d10 { background-position-x:  -720px; background-position-y: -360px}
+    &.dj  { background-position-x:  -800px; background-position-y: -360px}
+    &.dq  { background-position-x:  -880px; background-position-y: -360px}
+    &.dk  { background-position-x:  -960px; background-position-y: -360px}
+  }
+}
+
+.pile {
+  float: left;
+  margin-right: 10px;
+}
+
+.pile {
+  &.down {
+    .card {
+      &.down {
+        margin-left: -60px;
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+  &.swapping {
+    .card {
+      &.down {
+        margin-left: 0;
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.pile:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.opponent{
+  display: block;
+  &:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+  }
+}
+
+.board{
+  display: block;
+  margin: auto;
+  &:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+  }
+}
+.player {
+  display: block;
+  &:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+  }
+}

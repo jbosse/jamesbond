@@ -1,0 +1,284 @@
+.card {
+  border: 1px solid #ccc;
+  width: 80px;
+  height: 120px;
+  float: left;
+  background-color: #fff;
+  margin-right: 5px;
+  border-radius: 10px;
+  background-image: url('../images/deck_sprite.png');
+  text-indent: -9000px;
+}
+.card.down {
+  margin-right: 0;
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-position-y: -480px;
+}
+.card.swapping {
+  background-position-y: 0px;
+  margin-top: -30px;
+}
+.card.up.opponent {
+  margin-left: -60px;
+}
+.card.up.sa {
+  background-position-x: 0px;
+  background-position-y: 0px;
+}
+.card.up.s2 {
+  background-position-x: -80px;
+  background-position-y: 0px;
+}
+.card.up.s3 {
+  background-position-x: -160px;
+  background-position-y: 0px;
+}
+.card.up.s4 {
+  background-position-x: -240px;
+  background-position-y: 0px;
+}
+.card.up.s5 {
+  background-position-x: -320px;
+  background-position-y: 0px;
+}
+.card.up.s6 {
+  background-position-x: -400px;
+  background-position-y: 0px;
+}
+.card.up.s7 {
+  background-position-x: -480px;
+  background-position-y: 0px;
+}
+.card.up.s8 {
+  background-position-x: -560px;
+  background-position-y: 0px;
+}
+.card.up.s9 {
+  background-position-x: -640px;
+  background-position-y: 0px;
+}
+.card.up.s10 {
+  background-position-x: -720px;
+  background-position-y: 0px;
+}
+.card.up.sj {
+  background-position-x: -800px;
+  background-position-y: 0px;
+}
+.card.up.sq {
+  background-position-x: -880px;
+  background-position-y: 0px;
+}
+.card.up.sk {
+  background-position-x: -960px;
+  background-position-y: 0px;
+}
+.card.up.ha {
+  background-position-x: 0px;
+  background-position-y: -120px;
+}
+.card.up.h2 {
+  background-position-x: -80px;
+  background-position-y: -120px;
+}
+.card.up.h3 {
+  background-position-x: -160px;
+  background-position-y: -120px;
+}
+.card.up.h4 {
+  background-position-x: -240px;
+  background-position-y: -120px;
+}
+.card.up.h5 {
+  background-position-x: -320px;
+  background-position-y: -120px;
+}
+.card.up.h6 {
+  background-position-x: -400px;
+  background-position-y: -120px;
+}
+.card.up.h7 {
+  background-position-x: -480px;
+  background-position-y: -120px;
+}
+.card.up.h8 {
+  background-position-x: -560px;
+  background-position-y: -120px;
+}
+.card.up.h9 {
+  background-position-x: -640px;
+  background-position-y: -120px;
+}
+.card.up.h10 {
+  background-position-x: -720px;
+  background-position-y: -120px;
+}
+.card.up.hj {
+  background-position-x: -800px;
+  background-position-y: -120px;
+}
+.card.up.hq {
+  background-position-x: -880px;
+  background-position-y: -120px;
+}
+.card.up.hk {
+  background-position-x: -960px;
+  background-position-y: -120px;
+}
+.card.up.ca {
+  background-position-x: 0px;
+  background-position-y: -240px;
+}
+.card.up.c2 {
+  background-position-x: -80px;
+  background-position-y: -240px;
+}
+.card.up.c3 {
+  background-position-x: -160px;
+  background-position-y: -240px;
+}
+.card.up.c4 {
+  background-position-x: -240px;
+  background-position-y: -240px;
+}
+.card.up.c5 {
+  background-position-x: -320px;
+  background-position-y: -240px;
+}
+.card.up.c6 {
+  background-position-x: -400px;
+  background-position-y: -240px;
+}
+.card.up.c7 {
+  background-position-x: -480px;
+  background-position-y: -240px;
+}
+.card.up.c8 {
+  background-position-x: -560px;
+  background-position-y: -240px;
+}
+.card.up.c9 {
+  background-position-x: -640px;
+  background-position-y: -240px;
+}
+.card.up.c10 {
+  background-position-x: -720px;
+  background-position-y: -240px;
+}
+.card.up.cj {
+  background-position-x: -800px;
+  background-position-y: -240px;
+}
+.card.up.cq {
+  background-position-x: -880px;
+  background-position-y: -240px;
+}
+.card.up.ck {
+  background-position-x: -960px;
+  background-position-y: -240px;
+}
+.card.up.da {
+  background-position-x: 0px;
+  background-position-y: -360px;
+}
+.card.up.d2 {
+  background-position-x: -80px;
+  background-position-y: -360px;
+}
+.card.up.d3 {
+  background-position-x: -160px;
+  background-position-y: -360px;
+}
+.card.up.d4 {
+  background-position-x: -240px;
+  background-position-y: -360px;
+}
+.card.up.d5 {
+  background-position-x: -320px;
+  background-position-y: -360px;
+}
+.card.up.d6 {
+  background-position-x: -400px;
+  background-position-y: -360px;
+}
+.card.up.d7 {
+  background-position-x: -480px;
+  background-position-y: -360px;
+}
+.card.up.d8 {
+  background-position-x: -560px;
+  background-position-y: -360px;
+}
+.card.up.d9 {
+  background-position-x: -640px;
+  background-position-y: -360px;
+}
+.card.up.d10 {
+  background-position-x: -720px;
+  background-position-y: -360px;
+}
+.card.up.dj {
+  background-position-x: -800px;
+  background-position-y: -360px;
+}
+.card.up.dq {
+  background-position-x: -880px;
+  background-position-y: -360px;
+}
+.card.up.dk {
+  background-position-x: -960px;
+  background-position-y: -360px;
+}
+.pile {
+  float: left;
+  margin-right: 10px;
+}
+.pile.down .card.down {
+  margin-left: -60px;
+}
+.pile.down .card.down:first-child {
+  margin-left: 0;
+}
+.pile.swapping .card.down {
+  margin-left: 0;
+  opacity: 0.5;
+}
+.pile:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.opponent {
+  display: block;
+}
+.opponent:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.board {
+  display: block;
+  margin: auto;
+}
+.board:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.player {
+  display: block;
+}
+.player:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}

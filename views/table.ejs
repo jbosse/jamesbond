@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html ng-app="jamesbond">
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='stylesheets/app.css'/>
+  </head>
+  <body>
+  <div class="table" ng-controller="TableCtrl as table">
+    <p>{{table.message}}</p>
+    <p ng-show="table.paused">PAUSED</p>
+    <div class="opponent">
+      <h3>Opponent</h3>
+      <div class="pile" ng-repeat="pile in table.opponent.piles">
+        <div ng-repeat="card in pile.cards" class="card {{card.status}} {{card.value}}">{{card.value}}</div>
+      </div>
+    </div>
+    <div class="board">
+      <div class="pile">
+        <div ng-repeat="card in table.board.cards" class="card {{card.status}} {{card.value}}" ng-click="table.boardClick(card)">>{{card.value}}</div>
+      </div>
+    </div>
+    <div class="player">
+      <h3>You</h3>
+      <div class="pile" ng-repeat="pile in table.player.piles">
+        <div ng-repeat="card in pile.cards" class="card {{card.status}} {{card.value}}" ng-class="{swapping: card.swapping}" ng-click="table.cardClick(card)">{{card.value}}</div>
+      </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="//underscorejs.org/underscore-min.js"></script>
+  <script>if(typeof _ === 'undefined') { document.write("%3Cscript src='/javascript/vendor/underscore/1.5.2/underscore.js'%3E%3C/script%3E");}</script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+  <script>if(typeof angular === 'undefined') { document.write("%3Cscript src='/javascript/vendor/anmgular/1.2.2/angular.min.js'%3E%3C/script%3E");}</script>
+  <script>
+    var app = angular.module('jamesbond',[]);
+    app.factory('GameService', function(){
+//      function shuffle(array) {
+//        var m = array.length, t, i;
+//
+//        // While there remain elements to shuffle…
+//        while (m) {
+//
+//          // Pick a remaining element…
+//          i = Math.floor(Math.random() * m--);
+//
+//          // And swap it with the current element.
+//          t = array[m];
+//          array[m] = array[i];
+//          array[i] = t;
+//        }
+//
+//        return array;
+//      }
+//      var deck = shuffle([
+//        'sa','s2','s3','s4','s5','s6','s7','s8','s9','s10','sj','sq','sk',
+//        'ha','h2','h3','h4','h5','h6','h7','h8','h9','h10','hj','hq','hk',
+//        'ca','c2','c3','c4','c5','c6','c7','c8','c9','c10','cj','cq','ck',
+//        'da','d2','d3','d4','d5','d6','d7','d8','d9','d10','dj','dq','dk'
+//      ]);
+//      var game = {
+//        player1: {
+//          currentPile: 0,
+//          piles: [
+//            {position: 1, cards: [{ position: 1, value: deck[0] }, { position: 2, value: deck[1] }, { position: 3, value: deck[2] }, { position: 4, value: deck[3] }]},
+//            {position: 2, cards: [{ position: 1, value: deck[4] }, { position: 2, value: deck[5] }, { position: 3, value: deck[6] }, { position: 4, value: deck[7] }]},
+//            {position: 3, cards: [{ position: 1, value: deck[8] }, { position: 2, value: deck[9] }, { position: 3, value: deck[10]}, { position: 4, value: deck[11]}]},
+//            {position: 4, cards: [{ position: 1, value: deck[12]}, { position: 2, value: deck[13]}, { position: 3, value: deck[14]}, { position: 4, value: deck[15]}]},
+//            {position: 5, cards: [{ position: 1, value: deck[16]}, { position: 2, value: deck[17]}, { position: 3, value: deck[18]}, { position: 4, value: deck[19]}]},
+//            {position: 6, cards: [{ position: 1, value: deck[20]}, { position: 2, value: deck[21]}, { position: 3, value: deck[22]}, { position: 4, value: deck[23]}]}
+//          ]
+//        },
+//        board: {
+//          cards: [{ position: 1, value: deck[24] }, { position: 2, value: deck[25] }, { position: 3, value: deck[26] }, { position: 4, value: deck[27]}]
+//        },
+//        player2: {
+//          currentPile: 0,
+//          piles: [
+//            {position: 1, cards: [{ position: 1, value: deck[28] }, { position: 2, value: deck[29] }, { position: 3, value: deck[30]}, { position: 4, value: deck[31]}]},
+//            {position: 2, cards: [{ position: 1, value: deck[32] }, { position: 2, value: deck[33] }, { position: 3, value: deck[34]}, { position: 4, value: deck[35]}]},
+//            {position: 3, cards: [{ position: 1, value: deck[36] }, { position: 2, value: deck[37] }, { position: 3, value: deck[38]}, { position: 4, value: deck[39]}]},
+//            {position: 4, cards: [{ position: 1, value: deck[40] }, { position: 2, value: deck[41] }, { position: 3, value: deck[42]}, { position: 4, value: deck[43]}]},
+//            {position: 5, cards: [{ position: 1, value: deck[44] }, { position: 2, value: deck[45] }, { position: 3, value: deck[46]}, { position: 4, value: deck[47]}]},
+//            {position: 6, cards: [{ position: 1, value: deck[48] }, { position: 2, value: deck[49] }, { position: 3, value: deck[50]}, { position: 4, value: deck[51]}]}
+//          ]
+//        }
+//      };
+//      function filterPlayer1(){
+//        return { piles: _.map(game.player1.piles, function(pile){
+//          if(pile.cards[0].value.charAt(1) === pile.cards[1].value.charAt(1) &&
+//            pile.cards[0].value.charAt(1) === pile.cards[2].value.charAt(1) &&
+//            pile.cards[0].value.charAt(1) === pile.cards[3].value.charAt(1)){
+//            return { position: pile.position, cards: _.map(pile.cards, function(card){
+//                return { status: 'up', position: card.position, value: card.value }
+//              })
+//            };
+//          }
+//          return { position: pile.position, cards: _.map(pile.cards, function(card){
+//            return { status: 'down', position: card.position, value: '' }
+//          })}
+//        })};
+//      }
+//      function filterBoard(){
+//          return { cards: _.map(game.board.cards, function(card){
+//            return { position: card.position, status: 'up', value: card.value }
+//          })};
+//      }
+//      function filterPlayer2(){
+//        return { piles: _.map(game.player2.piles, function(pile){
+//          if(pile.cards[0].value.charAt(1) === pile.cards[1].value.charAt(1) &&
+//            pile.cards[0].value.charAt(1) === pile.cards[2].value.charAt(1) &&
+//            pile.cards[0].value.charAt(1) === pile.cards[3].value.charAt(1)){
+//            return { position: pile.position, cards: _.map(pile.cards, function(card){
+//                return { status: 'up', position: card.position, value: card.value }
+//              })
+//            };
+//          }
+//          return { position: pile.position, cards: _.map(pile.cards, function(card){
+//            return { position: card.position, status: game.player2.currentPile === pile.position ? 'up' : 'down', value: game.player2.currentPile === pile.position ? card.value : '' }
+//          })}
+//        })};
+//      }
+//      function selectPile(position){
+//        game.player2.currentPile = position;
+//      }
+//      function swapCards(boardPosition, pilePosition, cardPosition){
+//        var boardCard = _.find(game.board.cards, function(card){
+//          return card.position === boardPosition;
+//        });
+//        var pileCard = _.find(_.find(game.player2.piles, function(pile){
+//          return pile.position === pilePosition;
+//        }).cards, function(card){
+//          return card.position === cardPosition;
+//        });
+//        var newBoardValue = pileCard.value;
+//        var newPileValue =  boardCard.value;
+//        boardCard.value = newBoardValue;
+//        pileCard.value = newPileValue;
+//      }
+      var socket = io.connect('http://localhost');
+      var self = this;
+      self.statusCallback = null;
+      self.messageCallback = null;
+      self.ready = false;
+
+      socket.on('pause',function(message){
+        self.ready = false;
+        if(self.pauseCallback){
+          self.pauseCallback();
+        }
+      })
+
+      socket.on('message',function(message){
+        console.log(message);
+      })
+
+      socket.on('seated',function(){
+        if(self.messageCallback){
+          self.messageCallback('Waiting for an opponent');
+        }
+      })
+
+      socket.on('ready',function(){
+        self.ready = true;
+        if(self.messageCallback){
+          self.messageCallback('GO!');
+        }
+        if(self.readyCallback){
+          self.readyCallback();
+        }
+      })
+
+      socket.on('setStatus', function(status){
+        if(status.winner){
+          if(status.opponentVictory){
+            self.messageCallback("YOU LOOSE!");
+          } else if(status.yourVictory){
+            self.messageCallback("YOU WIN!");
+          } else {
+            self.messageCallback("Winner: " + status.winner);
+          }
+        }
+        if(self.statusCallback){
+          self.statusCallback(status);
+        }
+      })
+
+      self.getStatus = function(callback){
+          socket.emit('getStatus',callback);
+        };
+      self.selectPile = function(position){
+          if(!self.ready){
+            return;
+          }
+          socket.emit('selectPile', position);
+        };
+      self.swapCards = function(boardPosition, pilePosition, cardPosition){
+          if(!self.ready){
+            return;
+          }
+          socket.emit('swapCards', boardPosition, pilePosition, cardPosition);
+        };
+
+      return self;
+    });
+
+    app.controller('TableCtrl', function($scope, GameService) {
+      var self = this;
+      GameService.pauseCallback = function(){
+        self.paused = true;
+      };
+      GameService.readyCallback = function(){
+        self.paused = false;
+        self.ready = true;
+      };
+      GameService.statusCallback = function(status){
+        self.opponent = status.opponent;
+        self.board = status.board;
+        self.player = status.player;
+        $scope.$apply();
+      };
+      GameService.messageCallback = function(message){
+        console.log(message);
+        self.message = message;
+        $scope.$apply();
+      };
+      self.setStatus = function(){
+        GameService.getStatus(function(status){
+          self.opponent = status.opponent;
+          self.board = status.board;
+          self.player = status.player;
+          $scope.$apply();
+        });
+      };
+      self.boardClick = function(cardClicked){
+        if(self.selectedCard){
+          var selectedPile = _.find(self.player.piles, function(pile){
+            return _.find(pile.cards, function(card){
+              return card === self.selectedCard;
+            })
+          });
+          GameService.swapCards(cardClicked.position, selectedPile.position, self.selectedCard.position);
+          self.selectedCard = null;
+          //self.setStatus();
+          return;
+        }
+      };
+      self.cardClick = function(cardClicked){
+        if(cardClicked.status === 'down'){
+          self.selectedCard = null;
+          var selectedPile = _.find(self.player.piles, function(pile){
+            return _.find(pile.cards, function(card){
+              return card === cardClicked;
+            })
+          });
+          GameService.selectPile(selectedPile.position);
+          //self.setStatus();
+          return;
+        }
+        if(cardClicked.swapping){
+          self.selectedCard = null;
+          cardClicked.swapping = false;
+          return;
+        }
+        if(self.selectedCard){
+          self.selectedCard.swapping = false;
+        }
+        self.selectedCard = cardClicked;
+        cardClicked.swapping = true;
+      };
+      self.setStatus();
+    });
+  </script>
+  </body>
+</html>
